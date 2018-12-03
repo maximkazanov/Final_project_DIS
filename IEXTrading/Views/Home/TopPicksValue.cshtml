@@ -1,0 +1,80 @@
+﻿@model IEnumerable<IEXTrading.Models.Stock>
+<h2>Top stocks to buy</h2>
+<hr />
+<p>Selection criteria:</p>
+<p>- Implementation of value strategy (lowest price for a given level of earnings)</p>
+<p>- Based on derived EV to EBITDA ratio</p>
+<p>- EV (enterprise value) = (market cap + debt - cash) / EBITDA</p>
+<p>- Lowest EV to EBITDA ratio shall indicate the highest value stocks</p>
+<p>- Market capitalization greater than or equal to $300m</p>
+<p></p>
+<hr />
+<p></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Symbol
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Market Capitalization
+            </th>
+            <th>
+                Debt
+            </th>
+            <th>
+                Cash
+            </th>
+            <th>
+                EBITDA
+            </th>
+            <th>
+                EV to EBITDA ratio
+            </th>
+            <th>
+                Link to Graph
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.symbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.companyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.marketcap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.debt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cash)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EBITDA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EVtoEBITDA)
+            </td>
+            <td>
+                <a asp-controller="Home" asp-action="Chart" asp-route-symbol=@item.symbol>Chart</a>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+<p></p>
+<hr />
+<p></p>
+<p>!!!WARNING!!! Update of database will a) immediately  delete all existing records and b) will take about 30 minutes to complete.</p>
+<p></p>
+<a asp-controller="Home" asp-action="PopulateStocks"><img src="~/images/button_save-data.png" /></a>
